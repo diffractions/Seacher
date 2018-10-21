@@ -1,0 +1,17 @@
+CREATE DATABASE `searcher`;
+CREATE TABLE `text` (
+  `name` varchar(100) NOT NULL,
+  `text` longtext,
+  `property` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`name`),
+  UNIQUE KEY `nmae_UNIQUE` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `search`(IN var1 VARCHAR(100))
+    DETERMINISTIC
+BEGIN  
+   SELECT text.name, SUBSTRING_INDEX(SUBSTRING(text.text , 1, LOCATE('. ',text.text, LOCATE(var1, text.text))), '. ', -1) AS search_word_sentence FROM text WHERE LOCATE(var1, text.text) ;
+
+END$$
+DELIMITER ;
+
